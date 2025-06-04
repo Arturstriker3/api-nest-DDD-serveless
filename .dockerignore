@@ -1,0 +1,79 @@
+# Dependências
+node_modules
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build outputs (será criado durante o build)
+dist
+build
+*.tsbuildinfo
+
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory
+coverage
+*.lcov
+
+# Dependency directories
+.pnpm-store
+
+# Cache directories
+.npm
+.eslintcache
+
+# IDE files
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Git
+.git
+.gitignore
+
+# Docker files (não precisam estar na imagem)
+Dockerfile*
+.dockerignore
+docker-compose*.yml
+
+# Documentation (não precisa na imagem)
+README.md
+*.md
+
+# Tests (não são necessários em produção)
+*.test.ts
+*.spec.ts
+**/__tests__/
+test/
+jest.config.js
+
+# Environment files
+.env*
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Temporary folders
+tmp/
+temp/ 

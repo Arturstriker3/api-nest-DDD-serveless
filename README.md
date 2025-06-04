@@ -53,11 +53,26 @@ src/
 
 ## Instalação
 
+### Método 1: Desenvolvimento Local
+
 ```bash
 pnpm install
 ```
 
+### Método 2: Docker (Recomendado)
+
+```bash
+# Usar Docker Compose (mais fácil)
+docker-compose up --build
+
+# Ou construir manualmente
+docker build -t recipe-api .
+docker run -p 3000:3000 recipe-api
+```
+
 ## Executar a aplicação
+
+### Desenvolvimento Local
 
 ```bash
 # Desenvolvimento
@@ -67,6 +82,87 @@ pnpm start:dev
 pnpm build
 pnpm start:prod
 ```
+
+### Docker
+
+```bash
+# Desenvolvimento com Docker
+pnpm docker:dev
+# ou
+docker-compose up --build
+
+# Produção com Docker (background)
+pnpm docker:prod
+# ou
+docker-compose up -d --build
+
+# Parar containers
+docker-compose down
+
+# Ver logs
+docker-compose logs -f recipe-api
+```
+
+## 🐳 Docker
+
+### Características da Imagem Docker
+
+- ✅ **Multi-stage build** para otimização de tamanho
+- ✅ **Alpine Linux** como base (imagem ~50MB)
+- ✅ **Usuário não-root** para segurança
+- ✅ **Health check** configurado
+- ✅ **Cache otimizado** de dependências
+- ✅ **Produção-ready**
+
+### Scripts Docker Disponíveis
+
+```bash
+# Construir imagem
+pnpm docker:build
+
+# Executar container
+pnpm docker:run
+
+# Desenvolvimento com hot-reload
+pnpm docker:dev
+
+# Produção (background)
+pnpm docker:prod
+```
+
+### Comandos Docker Manuais
+
+```bash
+# Construir imagem
+docker build -t recipe-api .
+
+# Executar container
+docker run -p 3000:3000 recipe-api
+
+# Executar em background
+docker run -d -p 3000:3000 --name recipe-api recipe-api
+
+# Ver logs
+docker logs -f recipe-api
+
+# Parar container
+docker stop recipe-api
+
+# Remover container
+docker rm recipe-api
+
+# Ver informações da imagem
+docker images recipe-api
+```
+
+### Otimizações Implementadas
+
+1. **Multi-stage build**: Separa build de produção
+2. **Alpine Linux**: Base mínima (~5MB)
+3. **.dockerignore**: Exclui arquivos desnecessários
+4. **Cache de dependências**: Otimiza rebuilds
+5. **Usuário não-root**: Melhora segurança
+6. **Health check**: Monitora saúde do container
 
 A aplicação estará disponível em:
 
@@ -237,6 +333,7 @@ Através do Swagger você pode:
 - UUID
 - Swagger/OpenAPI
 - Jest (Testes)
+- Docker
 - Clean Architecture
 - PNPM
 
@@ -249,6 +346,8 @@ Através do Swagger você pode:
 - ✅ **Sistema de paginação genérico**
 - ✅ **Filtros por título, descrição e ingredientes**
 - ✅ **Testes unitários completos (100% cobertura use cases)**
+- ✅ **Docker otimizado com multi-stage build**
+- ✅ **Acesso por rede local (multi-dispositivo)**
 - ✅ Validação de dados com class-validator
 - ✅ Documentação automática com Swagger
 - ✅ Arquitetura limpa e escalável
