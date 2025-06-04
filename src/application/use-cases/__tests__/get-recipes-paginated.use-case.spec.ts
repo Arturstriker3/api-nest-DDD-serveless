@@ -1,8 +1,6 @@
 import { GetRecipesPaginatedUseCase } from "../get-recipes-paginated.use-case";
-import {
-  RecipeRepository,
-  IPaginatedResult,
-} from "../../../domain/repositories/recipe.repository";
+import { RecipeRepository } from "../../../domain/repositories/recipe.repository";
+import { IPaginatedResult } from "../../../domain/types/pagination.types";
 import { Recipe } from "../../../domain/entities/recipe.entity";
 import { RecipeFilterDto } from "../../dtos/recipe-filter.dto";
 
@@ -59,10 +57,11 @@ describe("GetRecipesPaginatedUseCase", () => {
 
       // Assert
       expect(mockRepository.findAllPaginated).toHaveBeenCalledTimes(1);
-      expect(mockRepository.findAllPaginated).toHaveBeenCalledWith({
-        page: 1,
-        limit: 10,
-      });
+      expect(mockRepository.findAllPaginated).toHaveBeenCalledWith(
+        1,
+        10,
+        undefined
+      );
       expect(result).toEqual(expectedResult);
       expect(result.data).toHaveLength(2);
       expect(result.total).toBe(25);
@@ -97,14 +96,10 @@ describe("GetRecipesPaginatedUseCase", () => {
 
       // Assert
       expect(mockRepository.findAllPaginated).toHaveBeenCalledTimes(1);
-      expect(mockRepository.findAllPaginated).toHaveBeenCalledWith({
-        page: 1,
-        limit: 5,
-        filters: {
-          title: "chocolate",
-          description: "delicioso",
-          ingredient: "farinha",
-        },
+      expect(mockRepository.findAllPaginated).toHaveBeenCalledWith(1, 5, {
+        title: "chocolate",
+        description: "delicioso",
+        ingredient: "farinha",
       });
       expect(result).toEqual(expectedResult);
     });
@@ -127,10 +122,11 @@ describe("GetRecipesPaginatedUseCase", () => {
       const result = await useCase.execute(filterDto);
 
       // Assert
-      expect(mockRepository.findAllPaginated).toHaveBeenCalledWith({
-        page: 2,
-        limit: 20,
-      });
+      expect(mockRepository.findAllPaginated).toHaveBeenCalledWith(
+        2,
+        20,
+        undefined
+      );
       expect(result.data).toEqual([]);
       expect(result.total).toBe(0);
     });
@@ -154,14 +150,10 @@ describe("GetRecipesPaginatedUseCase", () => {
       await useCase.execute(filterDto);
 
       // Assert
-      expect(mockRepository.findAllPaginated).toHaveBeenCalledWith({
-        page: 1,
-        limit: 10,
-        filters: {
-          title: "bolo",
-          description: undefined,
-          ingredient: undefined,
-        },
+      expect(mockRepository.findAllPaginated).toHaveBeenCalledWith(1, 10, {
+        title: "bolo",
+        description: undefined,
+        ingredient: undefined,
       });
     });
 
@@ -186,10 +178,11 @@ describe("GetRecipesPaginatedUseCase", () => {
       await useCase.execute(filterDto);
 
       // Assert
-      expect(mockRepository.findAllPaginated).toHaveBeenCalledWith({
-        page: 1,
-        limit: 10,
-      });
+      expect(mockRepository.findAllPaginated).toHaveBeenCalledWith(
+        1,
+        10,
+        undefined
+      );
     });
 
     it("should handle large page numbers", async () => {
@@ -210,10 +203,11 @@ describe("GetRecipesPaginatedUseCase", () => {
       const result = await useCase.execute(filterDto);
 
       // Assert
-      expect(mockRepository.findAllPaginated).toHaveBeenCalledWith({
-        page: 999,
-        limit: 50,
-      });
+      expect(mockRepository.findAllPaginated).toHaveBeenCalledWith(
+        999,
+        50,
+        undefined
+      );
       expect(result.data).toEqual([]);
       expect(result.total).toBe(100);
     });
@@ -258,6 +252,53 @@ describe("GetRecipesPaginatedUseCase", () => {
       expect(mockRepository.findAll).not.toHaveBeenCalled();
       expect(mockRepository.delete).not.toHaveBeenCalled();
     });
+
+    it("should handle edge case with limit 1", async () => {
+      // Arrange
+      const filterDto = createFilterDto({
+        page: 5,
+        limit: 1,
+      });
+
+      const expectedResult: IPaginatedResult<Recipe> = {
+        data: [],
+        total: 0,
+      };
+
+      mockRepository.findAllPaginated.mockResolvedValue(expectedResult);
+
+      // Act
+      await useCase.execute(filterDto);
+
+      // Assert
+      expect(mockRepository.findAllPaginated).toHaveBeenCalledWith(
+        5,
+        1,
+        undefined
+      );
+    });
+
+    it("should handle edge case with large limit", async () => {
+      // Arrange
+      const filterDto = createFilterDto({
+        page: 1,
+        limit: 1000,
+      });
+
+      const expectedResult: IPaginatedResult<Recipe> = { data: [], total: 0 };
+
+      mockRepository.findAllPaginated.mockResolvedValue(expectedResult);
+
+      // Act
+      await useCase.execute(filterDto);
+
+      // Assert
+      expect(mockRepository.findAllPaginated).toHaveBeenCalledWith(
+        1,
+        1000,
+        undefined
+      );
+    });
   });
 
   describe("hasFilters", () => {
@@ -276,8 +317,10 @@ describe("GetRecipesPaginatedUseCase", () => {
 
       // Assert
       expect(mockRepository.findAllPaginated).toHaveBeenCalledWith(
+        1,
+        10,
         expect.objectContaining({
-          filters: expect.any(Object),
+          title: "test",
         })
       );
     });
@@ -296,9 +339,9 @@ describe("GetRecipesPaginatedUseCase", () => {
 
       // Assert
       expect(mockRepository.findAllPaginated).toHaveBeenCalledWith(
-        expect.not.objectContaining({
-          filters: expect.any(Object),
-        })
+        1,
+        10,
+        undefined
       );
     });
   });

@@ -2,9 +2,9 @@ import { Injectable } from "@nestjs/common";
 import { Recipe } from "../../domain/entities/recipe.entity";
 import {
   RecipeRepository,
-  IFindAllOptions,
-  IPaginatedResult,
+  IRecipeFilterOptions,
 } from "../../domain/repositories/recipe.repository";
+import { IPaginatedResult } from "../../domain/types/pagination.types";
 
 @Injectable()
 export class RecipeMemoryRepository extends RecipeRepository {
@@ -24,20 +24,20 @@ export class RecipeMemoryRepository extends RecipeRepository {
   }
 
   async findAllPaginated(
-    options: IFindAllOptions
+    page: number,
+    limit: number,
+    filters?: IRecipeFilterOptions
   ): Promise<IPaginatedResult<Recipe>> {
     let allRecipes = Array.from(this.recipes.values());
 
-    if (options.filters) {
-      allRecipes = this.applyFilters(allRecipes, options.filters);
+    if (filters) {
+      allRecipes = this.applyFilters(allRecipes, filters);
     }
 
     const total = allRecipes.length;
 
-    if (options.page && options.limit) {
-      const skip = (options.page - 1) * options.limit;
-      allRecipes = allRecipes.slice(skip, skip + options.limit);
-    }
+    const skip = (page - 1) * limit;
+    allRecipes = allRecipes.slice(skip, skip + limit);
 
     return {
       data: allRecipes,
@@ -51,7 +51,7 @@ export class RecipeMemoryRepository extends RecipeRepository {
 
   private applyFilters(
     recipes: Recipe[],
-    filters: IFindAllOptions["filters"]
+    filters: IRecipeFilterOptions
   ): Recipe[] {
     if (!filters) return recipes;
 
