@@ -25,7 +25,13 @@ src/
 │   │   ├── create-recipe.use-case.ts
 │   │   ├── get-all-recipes.use-case.ts
 │   │   ├── get-recipe-by-id.use-case.ts
-│   │   └── get-recipes-paginated.use-case.ts
+│   │   ├── get-recipes-paginated.use-case.ts
+│   │   └── __tests__/
+│   │       ├── create-recipe.use-case.spec.ts
+│   │       ├── get-all-recipes.use-case.spec.ts
+│   │       ├── get-recipe-by-id.use-case.spec.ts
+│   │       ├── get-recipes-paginated.use-case.spec.ts
+│   │       └── README.md
 │   └── dtos/
 │       ├── create-recipe.dto.ts
 │       ├── recipe.dto.ts
@@ -66,6 +72,36 @@ A aplicação estará disponível em:
 
 - **API**: http://localhost:3000/api
 - **Documentação Swagger**: http://localhost:3000/api/docs
+
+## Testes
+
+### Executar Testes
+
+```bash
+# Executar todos os testes
+pnpm test
+
+# Executar com watch mode
+pnpm test:watch
+
+# Executar com cobertura
+pnpm test:cov
+```
+
+### Cobertura de Testes
+
+- ✅ **Use Cases**: 100% de cobertura
+- ✅ **25 testes unitários** implementados
+- ✅ **Padrão AAA** (Arrange-Act-Assert)
+- ✅ **Mocks isolados** para todos os repositórios
+- ✅ **Guard clauses** e edge cases cobertos
+
+**Arquivos de teste:**
+
+- `create-recipe.use-case.spec.ts` - 4 testes
+- `get-all-recipes.use-case.spec.ts` - 5 testes
+- `get-recipe-by-id.use-case.spec.ts` - 6 testes
+- `get-recipes-paginated.use-case.spec.ts` - 10 testes
 
 ## Endpoints da API
 
@@ -200,6 +236,7 @@ Através do Swagger você pode:
 - Class-validator
 - UUID
 - Swagger/OpenAPI
+- Jest (Testes)
 - Clean Architecture
 - PNPM
 
@@ -211,6 +248,7 @@ Através do Swagger você pode:
 - ✅ **Busca paginada com filtros**
 - ✅ **Sistema de paginação genérico**
 - ✅ **Filtros por título, descrição e ingredientes**
+- ✅ **Testes unitários completos (100% cobertura use cases)**
 - ✅ Validação de dados com class-validator
 - ✅ Documentação automática com Swagger
 - ✅ Arquitetura limpa e escalável
