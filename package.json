@@ -1,7 +1,7 @@
 {
-  "name": "api-recipe",
+  "name": "api-wealthcare",
   "version": "1.0.0",
-  "description": "Recipe API with Clean Architecture",
+  "description": "Wealthcare API with Clean Architecture",
   "main": "dist/main.js",
   "scripts": {
     "build": "nest build",
@@ -16,14 +16,15 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "docker:build": "docker build -t recipe-api .",
-    "docker:run": "docker run -p 3000:3000 recipe-api",
+    "docker:build": "docker build -t wealthcare-api .",
+    "docker:run": "docker run -p 3000:3000 wealthcare-api",
     "docker:dev": "docker-compose up --build",
     "docker:prod": "docker-compose up -d --build"
   },
   "keywords": [
     "nestjs",
-    "recipe",
+    "wealthcare",
+    "health",
     "api",
     "clean-architecture"
   ],

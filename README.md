@@ -1,6 +1,6 @@
-# Recipe API
+# Wealthcare API
 
-API para gerenciamento de receitas implementada com NestJS seguindo Clean Architecture.
+API para gerenciamento de saúde implementada com NestJS seguindo Clean Architecture.
 
 ## Arquitetura
 
@@ -66,8 +66,8 @@ pnpm install
 docker-compose up --build
 
 # Ou construir manualmente
-docker build -t recipe-api .
-docker run -p 3000:3000 recipe-api
+docker build -t wealthcare-api .
+docker run -p 3000:3000 wealthcare-api
 ```
 
 ## Executar a aplicação
@@ -100,7 +100,7 @@ docker-compose up -d --build
 docker-compose down
 
 # Ver logs
-docker-compose logs -f recipe-api
+docker-compose logs -f wealthcare-api
 ```
 
 ## 🐳 Docker
@@ -134,25 +134,25 @@ pnpm docker:prod
 
 ```bash
 # Construir imagem
-docker build -t recipe-api .
+docker build -t wealthcare-api .
 
 # Executar container
-docker run -p 3000:3000 recipe-api
+docker run -p 3000:3000 wealthcare-api
 
 # Executar em background
-docker run -d -p 3000:3000 --name recipe-api recipe-api
+docker run -d -p 3000:3000 --name wealthcare-api wealthcare-api
 
 # Ver logs
-docker logs -f recipe-api
+docker logs -f wealthcare-api
 
 # Parar container
-docker stop recipe-api
+docker stop wealthcare-api
 
 # Remover container
-docker rm recipe-api
+docker rm wealthcare-api
 
 # Ver informações da imagem
-docker images recipe-api
+docker images wealthcare-api
 ```
 
 ### Otimizações Implementadas

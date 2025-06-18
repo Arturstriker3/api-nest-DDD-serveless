@@ -1,9 +1,9 @@
 version: "3.8"
 
 services:
-  recipe-api:
+  wealthcare-api:
     build: .
-    container_name: recipe-api
+    container_name: wealthcare-api
     ports:
       - "3000:3000"
     environment:

@@ -46,12 +46,12 @@ async function bootstrap() {
   app.enableCors();
 
   const config = new DocumentBuilder()
-    .setTitle("Recipe API")
+    .setTitle("Wealthcare API")
     .setDescription(
-      "API para gerenciamento de receitas com Clean Architecture e DDD"
+      "API para gerenciamento de saúde com Clean Architecture e DDD"
     )
     .setVersion("1.0")
-    .addTag("recipes")
+    .addTag("wealthcare")
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
@@ -62,7 +62,7 @@ async function bootstrap() {
 
   await app.listen(port);
 
-  console.log("\n🚀 Recipe API is running on:");
+  console.log("\n🚀 Wealthcare API is running on:");
   console.log(`   Local:    http://localhost:${port}/api`);
   console.log(`   Network:  http://${localIP}:${port}/api`);
   console.log("\n📚 Swagger documentation available at:");
