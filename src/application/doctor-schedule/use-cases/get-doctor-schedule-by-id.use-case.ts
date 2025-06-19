@@ -1,4 +1,8 @@
-import { Injectable } from "@nestjs/common";
+import {
+  Injectable,
+  BadRequestException,
+  NotFoundException,
+} from "@nestjs/common";
 import { DoctorSchedule } from "../../../domain/doctor-schedule/entities/doctor-schedule.entity";
 import { DoctorScheduleRepository } from "../../../domain/doctor-schedule/repositories/doctor-schedule.repository";
 
@@ -8,12 +12,12 @@ export class GetDoctorScheduleByIdUseCase {
 
   async execute(id: string): Promise<DoctorSchedule> {
     if (!id?.trim()) {
-      throw new Error("Schedule ID is required");
+      throw new BadRequestException("Schedule ID is required");
     }
 
     const schedule = await this.scheduleRepository.findById(id);
     if (!schedule) {
-      throw new Error("Schedule not found");
+      throw new NotFoundException("Schedule not found");
     }
 
     return schedule;

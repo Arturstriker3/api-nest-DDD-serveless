@@ -47,11 +47,16 @@ export class DoctorController {
   ) {}
 
   @Post()
-  @ApiOperation({ summary: "Criar um novo médico" })
+  @ApiOperation({
+    summary: "Criar um novo médico",
+    description:
+      "Cria um médico apenas com nome e especialidade. Os horários (schedules) são criados separadamente via endpoint /doctor-schedules",
+  })
   @ApiBody({ type: CreateDoctorDto })
   @ApiResponse({
     status: 201,
-    description: "Médico criado com sucesso",
+    description:
+      "Médico criado com sucesso (availableSchedules será um array vazio)",
     type: DoctorDto,
   })
   @ApiResponse({
@@ -137,7 +142,11 @@ export class DoctorController {
   }
 
   @Put(":id")
-  @ApiOperation({ summary: "Atualizar um médico" })
+  @ApiOperation({
+    summary: "Atualizar um médico",
+    description:
+      "Atualiza nome, especialidade ou schedules. Para gerenciar horários individualmente, use /doctor-schedules",
+  })
   @ApiParam({
     name: "id",
     description: "ID do médico",

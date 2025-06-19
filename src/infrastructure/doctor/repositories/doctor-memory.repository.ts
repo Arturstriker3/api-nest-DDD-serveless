@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { Doctor } from "../../../domain/doctor/entities/doctor.entity";
 import {
   DoctorRepository,
@@ -69,7 +69,7 @@ export class DoctorMemoryRepository extends DoctorRepository {
       return doctor;
     }
 
-    throw new Error("Doctor not found");
+    throw new NotFoundException("Doctor not found");
   }
 
   async delete(id: string): Promise<void> {

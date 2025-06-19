@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { DoctorSchedule } from "../../../domain/doctor-schedule/entities/doctor-schedule.entity";
 import {
   DoctorScheduleRepository,
@@ -109,7 +109,7 @@ export class DoctorScheduleMemoryRepository extends DoctorScheduleRepository {
       return schedule;
     }
 
-    throw new Error("Schedule not found");
+    throw new NotFoundException("Schedule not found");
   }
 
   async delete(id: string): Promise<void> {

@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, BadRequestException } from "@nestjs/common";
 import { DoctorRepository } from "../../../domain/doctor/repositories/doctor.repository";
 import { Doctor } from "../../../domain/doctor/entities/doctor.entity";
 import { DoctorFilterDto } from "../dtos/doctor-filter.dto";
@@ -10,11 +10,11 @@ export class GetDoctorsPaginatedUseCase {
 
   async execute(filterDto: DoctorFilterDto): Promise<IPaginatedResult<Doctor>> {
     if (filterDto.page < 1) {
-      throw new Error("Page must be greater than 0");
+      throw new BadRequestException("Page must be greater than 0");
     }
 
     if (filterDto.limit < 1 || filterDto.limit > 100) {
-      throw new Error("Limit must be between 1 and 100");
+      throw new BadRequestException("Limit must be between 1 and 100");
     }
 
     const filters = {

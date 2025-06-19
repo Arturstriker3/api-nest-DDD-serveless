@@ -1,4 +1,9 @@
-import { Injectable } from "@nestjs/common";
+import {
+  Injectable,
+  BadRequestException,
+  NotFoundException,
+  ConflictException,
+} from "@nestjs/common";
 import { DoctorSchedule } from "../../../domain/doctor-schedule/entities/doctor-schedule.entity";
 import { DoctorScheduleRepository } from "../../../domain/doctor-schedule/repositories/doctor-schedule.repository";
 import { UpdateDoctorScheduleDto } from "../dtos/update-doctor-schedule.dto";
@@ -12,12 +17,12 @@ export class UpdateDoctorScheduleUseCase {
     updateDto: UpdateDoctorScheduleDto
   ): Promise<DoctorSchedule> {
     if (!id?.trim()) {
-      throw new Error("Schedule ID is required");
+      throw new BadRequestException("Schedule ID is required");
     }
 
     const existingSchedule = await this.scheduleRepository.findById(id);
     if (!existingSchedule) {
-      throw new Error("Schedule not found");
+      throw new NotFoundException("Schedule not found");
     }
 
     let availableDate = existingSchedule.availableDate;
@@ -27,7 +32,7 @@ export class UpdateDoctorScheduleUseCase {
     if (updateDto.availableDate) {
       availableDate = new Date(updateDto.availableDate);
       if (isNaN(availableDate.getTime())) {
-        throw new Error("Invalid date format");
+        throw new BadRequestException("Invalid date format");
       }
     }
 
@@ -35,7 +40,7 @@ export class UpdateDoctorScheduleUseCase {
     if (updateDto.availableTime) {
       availableTime = updateDto.availableTime.trim();
       if (!availableTime) {
-        throw new Error("Available time cannot be empty");
+        throw new BadRequestException("Available time cannot be empty");
       }
     }
 
@@ -48,7 +53,7 @@ export class UpdateDoctorScheduleUseCase {
       );
 
       if (existing && existing.id !== id) {
-        throw new Error(
+        throw new ConflictException(
           "Schedule already exists for this doctor at this date and time"
         );
       }

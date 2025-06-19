@@ -1,4 +1,8 @@
-import { Injectable } from "@nestjs/common";
+import {
+  Injectable,
+  BadRequestException,
+  NotFoundException,
+} from "@nestjs/common";
 import { Appointment } from "../../../domain/appointment/entities/appointment.entity";
 import { AppointmentRepository } from "../../../domain/appointment/repositories/appointment.repository";
 
@@ -8,12 +12,12 @@ export class GetAppointmentByIdUseCase {
 
   async execute(id: string): Promise<Appointment> {
     if (!id?.trim()) {
-      throw new Error("Appointment ID is required");
+      throw new BadRequestException("Appointment ID is required");
     }
 
     const appointment = await this.appointmentRepository.findById(id);
     if (!appointment) {
-      throw new Error("Appointment not found");
+      throw new NotFoundException("Appointment not found");
     }
 
     return appointment;

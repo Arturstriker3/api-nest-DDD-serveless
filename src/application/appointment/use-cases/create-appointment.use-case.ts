@@ -1,4 +1,9 @@
-import { Injectable } from "@nestjs/common";
+import {
+  Injectable,
+  BadRequestException,
+  NotFoundException,
+  ConflictException,
+} from "@nestjs/common";
 import { v4 as uuidv4 } from "uuid";
 import { Appointment } from "../../../domain/appointment/entities/appointment.entity";
 import { AppointmentRepository } from "../../../domain/appointment/repositories/appointment.repository";
@@ -14,11 +19,11 @@ export class CreateAppointmentUseCase {
 
   async execute(createDto: CreateAppointmentDto): Promise<Appointment> {
     if (!createDto.doctorScheduleId?.trim()) {
-      throw new Error("Doctor schedule ID is required");
+      throw new BadRequestException("Doctor schedule ID is required");
     }
 
     if (!createDto.patientName?.trim()) {
-      throw new Error("Patient name is required");
+      throw new BadRequestException("Patient name is required");
     }
 
     // Verifica se o horário existe
@@ -26,12 +31,12 @@ export class CreateAppointmentUseCase {
       createDto.doctorScheduleId
     );
     if (!schedule) {
-      throw new Error("Doctor schedule not found");
+      throw new NotFoundException("Doctor schedule not found");
     }
 
     // Verifica se o horário está disponível
     if (!schedule.isAvailable()) {
-      throw new Error("Doctor schedule is not available");
+      throw new ConflictException("Doctor schedule is not available");
     }
 
     // Verifica se já existe agendamento para este horário
@@ -40,7 +45,7 @@ export class CreateAppointmentUseCase {
         createDto.doctorScheduleId
       );
     if (existingAppointment) {
-      throw new Error("Schedule already has an appointment");
+      throw new ConflictException("Schedule already has an appointment");
     }
 
     // Cria o agendamento

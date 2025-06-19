@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { Appointment } from "../../../domain/appointment/entities/appointment.entity";
 import {
   AppointmentRepository,
@@ -89,7 +89,7 @@ export class AppointmentMemoryRepository extends AppointmentRepository {
       return appointment;
     }
 
-    throw new Error("Appointment not found");
+    throw new NotFoundException("Appointment not found");
   }
 
   async delete(id: string): Promise<void> {

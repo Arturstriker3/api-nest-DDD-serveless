@@ -1,4 +1,8 @@
-import { Injectable } from "@nestjs/common";
+import {
+  Injectable,
+  BadRequestException,
+  ConflictException,
+} from "@nestjs/common";
 import { v4 as uuidv4 } from "uuid";
 import { DoctorSchedule } from "../../../domain/doctor-schedule/entities/doctor-schedule.entity";
 import { DoctorScheduleRepository } from "../../../domain/doctor-schedule/repositories/doctor-schedule.repository";
@@ -10,20 +14,20 @@ export class CreateDoctorScheduleUseCase {
 
   async execute(createDto: CreateDoctorScheduleDto): Promise<DoctorSchedule> {
     if (!createDto.doctorId?.trim()) {
-      throw new Error("Doctor ID is required");
+      throw new BadRequestException("Doctor ID is required");
     }
 
     if (!createDto.availableDate?.trim()) {
-      throw new Error("Available date is required");
+      throw new BadRequestException("Available date is required");
     }
 
     if (!createDto.availableTime?.trim()) {
-      throw new Error("Available time is required");
+      throw new BadRequestException("Available time is required");
     }
 
     const availableDate = new Date(createDto.availableDate);
     if (isNaN(availableDate.getTime())) {
-      throw new Error("Invalid date format");
+      throw new BadRequestException("Invalid date format");
     }
 
     // Verifica se já existe horário no mesmo doctor/data/hora
@@ -34,7 +38,7 @@ export class CreateDoctorScheduleUseCase {
     );
 
     if (existing) {
-      throw new Error(
+      throw new ConflictException(
         "Schedule already exists for this doctor at this date and time"
       );
     }
