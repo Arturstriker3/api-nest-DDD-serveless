@@ -62,6 +62,10 @@ export class DoctorScheduleController {
     status: 400,
     description: "Dados inválidos ou horário já existe",
   })
+  @ApiResponse({
+    status: 404,
+    description: "Médico não encontrado",
+  })
   async create(
     @Body(new ValidationPipe()) createDto: CreateDoctorScheduleDto
   ): Promise<DoctorScheduleDto> {
