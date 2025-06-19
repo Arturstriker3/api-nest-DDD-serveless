@@ -55,82 +55,92 @@ The API is organized around three main **bounded contexts**:
 
 ```
 src/
-├── domain/
+├── 🔴 domain/
 │   ├── shared/
 │   │   └── types/
-│   │       └── pagination.types.ts
+│   │       └── 🔴 pagination.types.ts
 │   ├── doctor/
 │   │   ├── entities/
-│   │   │   └── doctor.entity.ts
+│   │   │   └── 🔴 doctor.entity.ts
 │   │   └── repositories/
-│   │       └── doctor.repository.ts
+│   │       └── 🔴 doctor.repository.ts
 │   ├── doctor-schedule/
 │   │   ├── entities/
-│   │   │   └── doctor-schedule.entity.ts
+│   │   │   └── 🔴 doctor-schedule.entity.ts
 │   │   └── repositories/
-│   │       └── doctor-schedule.repository.ts
+│   │       └── 🔴 doctor-schedule.repository.ts
 │   └── appointment/
 │       ├── entities/
-│       │   └── appointment.entity.ts
+│       │   └── 🔴 appointment.entity.ts
 │       └── repositories/
-│           └── appointment.repository.ts
-├── application/
+│           └── 🔴 appointment.repository.ts
+├── 🔵 application/
 │   ├── doctor/
 │   │   ├── dtos/
-│   │   │   ├── create-doctor.dto.ts
-│   │   │   ├── doctor.dto.ts
-│   │   │   ├── update-doctor.dto.ts
-│   │   │   ├── doctor-filter.dto.ts
-│   │   │   └── paginated-doctor-response.dto.ts
+│   │   │   ├── 🔵 create-doctor.dto.ts
+│   │   │   ├── 🔵 doctor.dto.ts
+│   │   │   ├── 🔵 update-doctor.dto.ts
+│   │   │   ├── 🔵 doctor-filter.dto.ts
+│   │   │   └── 🔵 paginated-doctor-response.dto.ts
 │   │   └── use-cases/
-│   │       ├── create-doctor.use-case.ts
-│   │       ├── get-doctor-by-id.use-case.ts
-│   │       ├── get-doctors-paginated.use-case.ts
-│   │       ├── update-doctor.use-case.ts
-│   │       └── delete-doctor.use-case.ts
+│   │       ├── 🔵 create-doctor.use-case.ts
+│   │       ├── 🔵 get-doctor-by-id.use-case.ts
+│   │       ├── 🔵 get-doctors-paginated.use-case.ts
+│   │       ├── 🔵 update-doctor.use-case.ts
+│   │       └── 🔵 delete-doctor.use-case.ts
 │   ├── doctor-schedule/
 │   │   ├── dtos/
-│   │   │   ├── create-doctor-schedule.dto.ts
-│   │   │   ├── doctor-schedule.dto.ts
-│   │   │   ├── update-doctor-schedule.dto.ts
-│   │   │   ├── doctor-schedule-filter.dto.ts
-│   │   │   └── paginated-doctor-schedule-response.dto.ts
+│   │   │   ├── 🔵 create-doctor-schedule.dto.ts
+│   │   │   ├── 🔵 doctor-schedule.dto.ts
+│   │   │   ├── 🔵 update-doctor-schedule.dto.ts
+│   │   │   ├── 🔵 doctor-schedule-filter.dto.ts
+│   │   │   └── 🔵 paginated-doctor-schedule-response.dto.ts
 │   │   └── use-cases/
-│   │       ├── create-doctor-schedule.use-case.ts
-│   │       ├── get-doctor-schedule-by-id.use-case.ts
-│   │       ├── get-doctor-schedules-paginated.use-case.ts
-│   │       ├── update-doctor-schedule.use-case.ts
-│   │       └── delete-doctor-schedule.use-case.ts
+│   │       ├── 🔵 create-doctor-schedule.use-case.ts
+│   │       ├── 🔵 get-doctor-schedule-by-id.use-case.ts
+│   │       ├── 🔵 get-doctor-schedules-paginated.use-case.ts
+│   │       ├── 🔵 update-doctor-schedule.use-case.ts
+│   │       └── 🔵 delete-doctor-schedule.use-case.ts
 │   └── appointment/
 │       ├── dtos/
-│       │   ├── create-appointment.dto.ts
-│       │   ├── appointment.dto.ts
-│       │   ├── update-appointment.dto.ts
-│       │   ├── appointment-filter.dto.ts
-│       │   └── paginated-appointment-response.dto.ts
+│       │   ├── 🔵 create-appointment.dto.ts
+│       │   ├── 🔵 appointment.dto.ts
+│       │   ├── 🔵 update-appointment.dto.ts
+│       │   ├── 🔵 appointment-filter.dto.ts
+│       │   └── 🔵 paginated-appointment-response.dto.ts
 │       └── use-cases/
-│           ├── create-appointment.use-case.ts
-│           ├── get-appointment-by-id.use-case.ts
-│           ├── get-appointments-paginated.use-case.ts
-│           ├── update-appointment.use-case.ts
-│           └── delete-appointment.use-case.ts
-├── infrastructure/
+│           ├── 🔵 create-appointment.use-case.ts
+│           ├── 🔵 get-appointment-by-id.use-case.ts
+│           ├── 🔵 get-appointments-paginated.use-case.ts
+│           ├── 🔵 update-appointment.use-case.ts
+│           └── 🔵 delete-appointment.use-case.ts
+├── 🟡 infrastructure/
 │   └── repositories/
-│       ├── doctor-memory.repository.ts
-│       ├── doctor-schedule-memory.repository.ts
-│       └── appointment-memory.repository.ts
-├── presentation/
+│       ├── 🟡 doctor-memory.repository.ts
+│       ├── 🟡 doctor-schedule-memory.repository.ts
+│       └── 🟡 appointment-memory.repository.ts
+├── 🟢 presentation/
 │   ├── controllers/
-│   │   ├── doctor.controller.ts
-│   │   ├── doctor-schedule.controller.ts
-│   │   └── appointment.controller.ts
+│   │   ├── 🟢 doctor.controller.ts
+│   │   ├── 🟢 doctor-schedule.controller.ts
+│   │   └── 🟢 appointment.controller.ts
 │   └── presenters/
-│       ├── doctor.presenter.ts
-│       ├── doctor-schedule.presenter.ts
-│       └── appointment.presenter.ts
-├── app.module.ts
-└── main.ts
+│       ├── 🟢 doctor.presenter.ts
+│       ├── 🟢 doctor-schedule.presenter.ts
+│       └── 🟢 appointment.presenter.ts
+├── ⚫ app.module.ts
+└── ⚫ main.ts
 ```
+
+### 🎨 Clean Architecture Layers Legend
+
+| Color | Layer              | Description                                                  |
+| ----- | ------------------ | ------------------------------------------------------------ |
+| 🔴    | **Domain**         | Business entities, value objects, and repository interfaces  |
+| 🔵    | **Application**    | Use cases, DTOs, and business logic orchestration            |
+| 🟡    | **Infrastructure** | Concrete implementations, external services, and data access |
+| 🟢    | **Presentation**   | Controllers, presenters, and HTTP layer                      |
+| ⚫    | **Configuration**  | Application setup, modules, and entry points                 |
 
 ## 🚀 Installation & Setup
 
