@@ -115,19 +115,31 @@ src/
 │           ├── 🔵 update-appointment.use-case.ts
 │           └── 🔵 delete-appointment.use-case.ts
 ├── 🟡 infrastructure/
-│   └── repositories/
-│       ├── 🟡 doctor-memory.repository.ts
-│       ├── 🟡 doctor-schedule-memory.repository.ts
-│       └── 🟡 appointment-memory.repository.ts
+│   ├── doctor/
+│   │   └── repositories/
+│   │       └── 🟡 doctor-memory.repository.ts
+│   ├── doctor-schedule/
+│   │   └── repositories/
+│   │       └── 🟡 doctor-schedule-memory.repository.ts
+│   └── appointment/
+│       └── repositories/
+│           └── 🟡 appointment-memory.repository.ts
 ├── 🟢 presentation/
-│   ├── controllers/
-│   │   ├── 🟢 doctor.controller.ts
-│   │   ├── 🟢 doctor-schedule.controller.ts
-│   │   └── 🟢 appointment.controller.ts
-│   └── presenters/
-│       ├── 🟢 doctor.presenter.ts
-│       ├── 🟢 doctor-schedule.presenter.ts
-│       └── 🟢 appointment.presenter.ts
+│   ├── doctor/
+│   │   ├── controllers/
+│   │   │   └── 🟢 doctor.controller.ts
+│   │   └── presenters/
+│   │       └── 🟢 doctor.presenter.ts
+│   ├── doctor-schedule/
+│   │   ├── controllers/
+│   │   │   └── 🟢 doctor-schedule.controller.ts
+│   │   └── presenters/
+│   │       └── 🟢 doctor-schedule.presenter.ts
+│   └── appointment/
+│       ├── controllers/
+│       │   └── 🟢 appointment.controller.ts
+│       └── presenters/
+│           └── 🟢 appointment.presenter.ts
 ├── ⚫ app.module.ts
 └── ⚫ main.ts
 ```
