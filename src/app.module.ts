@@ -1,25 +1,27 @@
 import { Module } from "@nestjs/common";
-import { RecipeController } from "./presentation/controllers/recipe.controller";
-import { RecipePresenter } from "./presentation/presenters/recipe.presenter";
-import { CreateRecipeUseCase } from "./application/use-cases/create-recipe.use-case";
-import { GetAllRecipesUseCase } from "./application/use-cases/get-all-recipes.use-case";
-import { GetRecipeByIdUseCase } from "./application/use-cases/get-recipe-by-id.use-case";
-import { GetRecipesPaginatedUseCase } from "./application/use-cases/get-recipes-paginated.use-case";
-import { RecipeRepository } from "./domain/repositories/recipe.repository";
-import { RecipeMemoryRepository } from "./infrastructure/repositories/recipe-memory.repository";
+import { DoctorController } from "./presentation/doctor/controllers/doctor.controller";
+import { DoctorPresenter } from "./presentation/doctor/presenters/doctor.presenter";
+import { CreateDoctorUseCase } from "./application/doctor/use-cases/create-doctor.use-case";
+import { GetDoctorByIdUseCase } from "./application/doctor/use-cases/get-doctor-by-id.use-case";
+import { GetDoctorsPaginatedUseCase } from "./application/doctor/use-cases/get-doctors-paginated.use-case";
+import { UpdateDoctorUseCase } from "./application/doctor/use-cases/update-doctor.use-case";
+import { DeleteDoctorUseCase } from "./application/doctor/use-cases/delete-doctor.use-case";
+import { DoctorRepository } from "./domain/doctor/repositories/doctor.repository";
+import { DoctorMemoryRepository } from "./infrastructure/doctor/repositories/doctor-memory.repository";
 
 @Module({
   imports: [],
-  controllers: [RecipeController],
+  controllers: [DoctorController],
   providers: [
-    RecipePresenter,
-    CreateRecipeUseCase,
-    GetAllRecipesUseCase,
-    GetRecipeByIdUseCase,
-    GetRecipesPaginatedUseCase,
+    DoctorPresenter,
+    CreateDoctorUseCase,
+    GetDoctorByIdUseCase,
+    GetDoctorsPaginatedUseCase,
+    UpdateDoctorUseCase,
+    DeleteDoctorUseCase,
     {
-      provide: RecipeRepository,
-      useClass: RecipeMemoryRepository,
+      provide: DoctorRepository,
+      useClass: DoctorMemoryRepository,
     },
   ],
 })

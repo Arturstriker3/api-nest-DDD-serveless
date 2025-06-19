@@ -51,7 +51,7 @@ async function bootstrap() {
       "API para gerenciamento de saúde com Clean Architecture e DDD"
     )
     .setVersion("1.0")
-    .addTag("wealthcare")
+    .addTag("doctors")
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

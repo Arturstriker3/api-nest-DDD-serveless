@@ -1,13 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-
-export interface IPaginationMeta {
-  page: number;
-  limit: number;
-  total: number;
-  totalPages: number;
-  hasNext: boolean;
-  hasPrev: boolean;
-}
+import { DoctorDto } from "./doctor.dto";
+import { IPaginationMeta } from "../../../domain/shared/types/pagination.types";
 
 export class PaginationMetaDto implements IPaginationMeta {
   @ApiProperty({
@@ -17,13 +10,13 @@ export class PaginationMetaDto implements IPaginationMeta {
   page: number;
 
   @ApiProperty({
-    description: "Quantidade de itens por página",
+    description: "Itens por página",
     example: 10,
   })
   limit: number;
 
   @ApiProperty({
-    description: "Total de itens encontrados",
+    description: "Total de itens",
     example: 25,
   })
   total: number;
@@ -35,16 +28,16 @@ export class PaginationMetaDto implements IPaginationMeta {
   totalPages: number;
 
   @ApiProperty({
-    description: "Indica se há próxima página",
+    description: "Tem próxima página",
     example: true,
   })
   hasNext: boolean;
 
   @ApiProperty({
-    description: "Indica se há página anterior",
+    description: "Tem página anterior",
     example: false,
   })
-  hasPrev: boolean;
+  hasPrevious: boolean;
 
   constructor(page: number, limit: number, total: number) {
     this.page = page;
@@ -52,16 +45,16 @@ export class PaginationMetaDto implements IPaginationMeta {
     this.total = total;
     this.totalPages = Math.ceil(total / limit);
     this.hasNext = page < this.totalPages;
-    this.hasPrev = page > 1;
+    this.hasPrevious = page > 1;
   }
 }
 
-export class PaginatedResponseDto<T> {
+export class PaginatedDoctorResponseDto {
   @ApiProperty({
-    description: "Lista de itens da página atual",
-    isArray: true,
+    description: "Lista de médicos",
+    type: [DoctorDto],
   })
-  data: T[];
+  data: DoctorDto[];
 
   @ApiProperty({
     description: "Metadados da paginação",
@@ -69,7 +62,7 @@ export class PaginatedResponseDto<T> {
   })
   meta: PaginationMetaDto;
 
-  constructor(data: T[], meta: PaginationMetaDto) {
+  constructor(data: DoctorDto[], meta: PaginationMetaDto) {
     this.data = data;
     this.meta = meta;
   }
