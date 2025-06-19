@@ -12,7 +12,6 @@ export class AppointmentMemoryRepository extends AppointmentRepository {
 
   constructor() {
     super();
-    this.seedData();
   }
 
   async save(appointment: Appointment): Promise<Appointment> {
@@ -100,15 +99,5 @@ export class AppointmentMemoryRepository extends AppointmentRepository {
     if (index >= 0) {
       this.appointments.splice(index, 1);
     }
-  }
-
-  private seedData(): void {
-    const sampleAppointments = [
-      Appointment.create("appointment-1", "sch-3", "Maria Oliveira Silva"),
-      Appointment.create("appointment-2", "sch-7", "João Santos Costa"),
-      Appointment.create("appointment-3", "sch-12", "Ana Paula Souza"),
-    ];
-
-    this.appointments = sampleAppointments;
   }
 }

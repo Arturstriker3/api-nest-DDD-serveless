@@ -12,7 +12,6 @@ export class DoctorMemoryRepository extends DoctorRepository {
 
   constructor() {
     super();
-    this.seedData();
   }
 
   async save(doctor: Doctor): Promise<Doctor> {
@@ -78,26 +77,5 @@ export class DoctorMemoryRepository extends DoctorRepository {
     if (index >= 0) {
       this.doctors.splice(index, 1);
     }
-  }
-
-  private seedData(): void {
-    const sampleDoctors = [
-      Doctor.create("1", "Dr. João Silva", "Cardiologia", [
-        "schedule-1",
-        "schedule-2",
-      ]),
-      Doctor.create("2", "Dra. Maria Santos", "Dermatologia", ["schedule-3"]),
-      Doctor.create("3", "Dr. Pedro Costa", "Ortopedia", [
-        "schedule-4",
-        "schedule-5",
-      ]),
-      Doctor.create("4", "Dra. Ana Oliveira", "Pediatria", ["schedule-6"]),
-      Doctor.create("5", "Dr. Carlos Souza", "Neurologia", [
-        "schedule-7",
-        "schedule-8",
-      ]),
-    ];
-
-    this.doctors = sampleDoctors;
   }
 }
