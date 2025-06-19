@@ -1,355 +1,430 @@
 # Wealthcare API
 
-API para gerenciamento de saúde implementada com NestJS seguindo Clean Architecture.
+Healthcare management API built with NestJS following Clean Architecture and Domain-Driven Design (DDD) principles.
 
-## Arquitetura
+## 🏗️ Architecture Overview
 
-A aplicação segue os princípios da Clean Architecture com separação clara das responsabilidades:
+This application implements **Clean Architecture** with **Domain-Driven Design (DDD)** principles, providing a scalable and maintainable healthcare management system.
 
-- **Domain**: Contém as entidades e interfaces de repositório
-- **Application**: Use cases e DTOs
-- **Infrastructure**: Implementações concretas (repositório em memória)
-- **Presentation**: Controllers e presenters
+### Clean Architecture Layers
 
-## Estrutura de Diretórios
+- **Domain**: Business entities, value objects, and repository interfaces
+- **Application**: Use cases, DTOs, and business logic orchestration
+- **Infrastructure**: Concrete implementations (in-memory repositories)
+- **Presentation**: Controllers, presenters, and HTTP layer
+
+### Domain-Driven Design
+
+The API is organized around three main **bounded contexts**:
+
+1. **Doctor Management** - Healthcare professionals and their information
+2. **Schedule Management** - Doctor availability and time slots
+3. **Appointment Management** - Patient appointments and booking system
+
+## 🌟 Features
+
+### ✅ Complete CRUD Operations
+
+- **Doctors**: Create, read, update, delete healthcare professionals
+- **Doctor Schedules**: Manage doctor availability slots
+- **Appointments**: Handle patient appointments and bookings
+
+### ✅ Advanced Business Logic
+
+- **Referential Integrity**: Schedules must reference existing doctors
+- **Appointment Booking**: Automatic schedule occupation when appointments are created
+- **Schedule Availability**: Proper management of available vs occupied time slots
+- **Data Validation**: Comprehensive input validation and business rules
+
+### ✅ Production-Ready Features
+
+- **Pagination**: Generic pagination system across all domains
+- **Filtering**: Advanced search capabilities with multiple criteria
+- **Error Handling**: Proper HTTP status codes and NestJS exceptions
+- **Swagger Documentation**: Interactive API documentation
+- **Clean Code**: Guard clauses, SOLID principles, and English naming conventions
+
+### ✅ Architecture Benefits
+
+- **Independent Domains**: Loosely coupled bounded contexts
+- **Testable Design**: Dependency injection and interface-based architecture
+- **Scalable Structure**: Easy to extend with new domains
+- **Technology Agnostic**: Business logic independent of frameworks
+
+## 📁 Project Structure
 
 ```
 src/
 ├── domain/
-│   ├── entities/
-│   │   └── recipe.entity.ts
-│   └── repositories/
-│       └── recipe.repository.ts
+│   ├── shared/
+│   │   └── types/
+│   │       └── pagination.types.ts
+│   ├── doctor/
+│   │   ├── entities/
+│   │   │   └── doctor.entity.ts
+│   │   └── repositories/
+│   │       └── doctor.repository.ts
+│   ├── doctor-schedule/
+│   │   ├── entities/
+│   │   │   └── doctor-schedule.entity.ts
+│   │   └── repositories/
+│   │       └── doctor-schedule.repository.ts
+│   └── appointment/
+│       ├── entities/
+│       │   └── appointment.entity.ts
+│       └── repositories/
+│           └── appointment.repository.ts
 ├── application/
-│   ├── use-cases/
-│   │   ├── create-recipe.use-case.ts
-│   │   ├── get-all-recipes.use-case.ts
-│   │   ├── get-recipe-by-id.use-case.ts
-│   │   ├── get-recipes-paginated.use-case.ts
-│   │   └── __tests__/
-│   │       ├── create-recipe.use-case.spec.ts
-│   │       ├── get-all-recipes.use-case.spec.ts
-│   │       ├── get-recipe-by-id.use-case.spec.ts
-│   │       ├── get-recipes-paginated.use-case.spec.ts
-│   │       └── README.md
-│   └── dtos/
-│       ├── create-recipe.dto.ts
-│       ├── recipe.dto.ts
-│       ├── recipe-filter.dto.ts
-│       ├── pagination.dto.ts
-│       ├── paginated-response.dto.ts
-│       └── paginated-recipe-response.dto.ts
+│   ├── doctor/
+│   │   ├── dtos/
+│   │   │   ├── create-doctor.dto.ts
+│   │   │   ├── doctor.dto.ts
+│   │   │   ├── update-doctor.dto.ts
+│   │   │   ├── doctor-filter.dto.ts
+│   │   │   └── paginated-doctor-response.dto.ts
+│   │   └── use-cases/
+│   │       ├── create-doctor.use-case.ts
+│   │       ├── get-doctor-by-id.use-case.ts
+│   │       ├── get-doctors-paginated.use-case.ts
+│   │       ├── update-doctor.use-case.ts
+│   │       └── delete-doctor.use-case.ts
+│   ├── doctor-schedule/
+│   │   ├── dtos/
+│   │   │   ├── create-doctor-schedule.dto.ts
+│   │   │   ├── doctor-schedule.dto.ts
+│   │   │   ├── update-doctor-schedule.dto.ts
+│   │   │   ├── doctor-schedule-filter.dto.ts
+│   │   │   └── paginated-doctor-schedule-response.dto.ts
+│   │   └── use-cases/
+│   │       ├── create-doctor-schedule.use-case.ts
+│   │       ├── get-doctor-schedule-by-id.use-case.ts
+│   │       ├── get-doctor-schedules-paginated.use-case.ts
+│   │       ├── update-doctor-schedule.use-case.ts
+│   │       └── delete-doctor-schedule.use-case.ts
+│   └── appointment/
+│       ├── dtos/
+│       │   ├── create-appointment.dto.ts
+│       │   ├── appointment.dto.ts
+│       │   ├── update-appointment.dto.ts
+│       │   ├── appointment-filter.dto.ts
+│       │   └── paginated-appointment-response.dto.ts
+│       └── use-cases/
+│           ├── create-appointment.use-case.ts
+│           ├── get-appointment-by-id.use-case.ts
+│           ├── get-appointments-paginated.use-case.ts
+│           ├── update-appointment.use-case.ts
+│           └── delete-appointment.use-case.ts
 ├── infrastructure/
 │   └── repositories/
-│       └── recipe-memory.repository.ts
+│       ├── doctor-memory.repository.ts
+│       ├── doctor-schedule-memory.repository.ts
+│       └── appointment-memory.repository.ts
 ├── presentation/
 │   ├── controllers/
-│   │   └── recipe.controller.ts
+│   │   ├── doctor.controller.ts
+│   │   ├── doctor-schedule.controller.ts
+│   │   └── appointment.controller.ts
 │   └── presenters/
-│       └── recipe.presenter.ts
+│       ├── doctor.presenter.ts
+│       ├── doctor-schedule.presenter.ts
+│       └── appointment.presenter.ts
 ├── app.module.ts
 └── main.ts
 ```
 
-## Instalação
+## 🚀 Installation & Setup
 
-### Método 1: Desenvolvimento Local
+### Method 1: Local Development
 
 ```bash
+# Install dependencies
 pnpm install
-```
 
-### Método 2: Docker (Recomendado)
-
-```bash
-# Usar Docker Compose (mais fácil)
-docker-compose up --build
-
-# Ou construir manualmente
-docker build -t wealthcare-api .
-docker run -p 3000:3000 wealthcare-api
-```
-
-## Executar a aplicação
-
-### Desenvolvimento Local
-
-```bash
-# Desenvolvimento
+# Start development server
 pnpm start:dev
 
-# Produção
+# Build for production
 pnpm build
 pnpm start:prod
 ```
 
-### Docker
+### Method 2: Docker (Recommended)
 
 ```bash
-# Desenvolvimento com Docker
-pnpm docker:dev
-# ou
+# Using Docker Compose (easiest)
 docker-compose up --build
 
-# Produção com Docker (background)
-pnpm docker:prod
-# ou
-docker-compose up -d --build
+# Or build manually
+docker build -t wealthcare-api .
+docker run -p 3000:3000 wealthcare-api
+```
 
-# Parar containers
+### Available Docker Scripts
+
+```bash
+# Development with hot-reload
+pnpm docker:dev
+
+# Production (background)
+pnpm docker:prod
+
+# Stop containers
 docker-compose down
 
-# Ver logs
+# View logs
 docker-compose logs -f wealthcare-api
 ```
 
-## 🐳 Docker
+## 🐳 Docker Configuration
 
-### Características da Imagem Docker
+### Optimized Docker Features
 
-- ✅ **Multi-stage build** para otimização de tamanho
-- ✅ **Alpine Linux** como base (imagem ~50MB)
-- ✅ **Usuário não-root** para segurança
-- ✅ **Health check** configurado
-- ✅ **Cache otimizado** de dependências
-- ✅ **Produção-ready**
+- ✅ **Multi-stage build** for size optimization (~50MB final image)
+- ✅ **Alpine Linux** base for security and performance
+- ✅ **Non-root user** for enhanced security
+- ✅ **Health check** for container monitoring
+- ✅ **Optimized caching** for faster rebuilds
+- ✅ **Production-ready** configuration
 
-### Scripts Docker Disponíveis
-
-```bash
-# Construir imagem
-pnpm docker:build
-
-# Executar container
-pnpm docker:run
-
-# Desenvolvimento com hot-reload
-pnpm docker:dev
-
-# Produção (background)
-pnpm docker:prod
-```
-
-### Comandos Docker Manuais
+### Docker Commands
 
 ```bash
-# Construir imagem
+# Build image
 docker build -t wealthcare-api .
 
-# Executar container
+# Run container
 docker run -p 3000:3000 wealthcare-api
 
-# Executar em background
+# Run in background
 docker run -d -p 3000:3000 --name wealthcare-api wealthcare-api
 
-# Ver logs
+# View container logs
 docker logs -f wealthcare-api
 
-# Parar container
-docker stop wealthcare-api
-
-# Remover container
-docker rm wealthcare-api
-
-# Ver informações da imagem
-docker images wealthcare-api
+# Stop and remove
+docker stop wealthcare-api && docker rm wealthcare-api
 ```
 
-### Otimizações Implementadas
+The application will be available at:
 
-1. **Multi-stage build**: Separa build de produção
-2. **Alpine Linux**: Base mínima (~5MB)
-3. **.dockerignore**: Exclui arquivos desnecessários
-4. **Cache de dependências**: Otimiza rebuilds
-5. **Usuário não-root**: Melhora segurança
-6. **Health check**: Monitora saúde do container
+- **API Base**: http://localhost:3000/api
+- **Swagger Documentation**: http://localhost:3000/api/docs
 
-A aplicação estará disponível em:
+## 📋 API Endpoints
 
-- **API**: http://localhost:3000/api
-- **Documentação Swagger**: http://localhost:3000/api/docs
+### 👨‍⚕️ Doctors
 
-## Testes
+| Method | Endpoint              | Description                        |
+| ------ | --------------------- | ---------------------------------- |
+| POST   | `/api/doctors`        | Create a new doctor                |
+| GET    | `/api/doctors/search` | Get paginated doctors with filters |
+| GET    | `/api/doctors/:id`    | Get doctor by ID                   |
+| PUT    | `/api/doctors/:id`    | Update doctor                      |
+| DELETE | `/api/doctors/:id`    | Delete doctor                      |
 
-### Executar Testes
-
-```bash
-# Executar todos os testes
-pnpm test
-
-# Executar com watch mode
-pnpm test:watch
-
-# Executar com cobertura
-pnpm test:cov
-```
-
-### Cobertura de Testes
-
-- ✅ **Use Cases**: 100% de cobertura
-- ✅ **25 testes unitários** implementados
-- ✅ **Padrão AAA** (Arrange-Act-Assert)
-- ✅ **Mocks isolados** para todos os repositórios
-- ✅ **Guard clauses** e edge cases cobertos
-
-**Arquivos de teste:**
-
-- `create-recipe.use-case.spec.ts` - 4 testes
-- `get-all-recipes.use-case.spec.ts` - 5 testes
-- `get-recipe-by-id.use-case.spec.ts` - 6 testes
-- `get-recipes-paginated.use-case.spec.ts` - 10 testes
-
-## Endpoints da API
-
-### Criar Receita
-
-```http
-POST /api/recipes
-Content-Type: application/json
-
-{
-  "title": "Bolo de Chocolate",
-  "description": "Um delicioso bolo de chocolate",
-  "ingredients": ["chocolate", "farinha", "ovos", "açúcar"]
-}
-```
-
-### Listar Todas as Receitas (sem paginação)
-
-```http
-GET /api/recipes
-```
-
-### Buscar Receitas com Paginação e Filtros
-
-```http
-GET /api/recipes/search?page=1&limit=10&title=chocolate&ingredient=farinha
-```
-
-**Parâmetros de Query:**
-
-- `page` (opcional): Número da página (padrão: 1)
-- `limit` (opcional): Itens por página (padrão: 10, máximo: 100)
-- `title` (opcional): Filtrar por título (busca parcial)
-- `description` (opcional): Filtrar por descrição (busca parcial)
-- `ingredient` (opcional): Filtrar por ingrediente (busca parcial)
-
-### Buscar Receita por ID
-
-```http
-GET /api/recipes/:id
-```
-
-## Exemplos de Resposta
-
-### Receita Individual
+**Create Doctor Example:**
 
 ```json
+POST /api/doctors
 {
-  "id": "123e4567-e89b-12d3-a456-426614174000",
-  "title": "Bolo de Chocolate",
-  "description": "Um delicioso bolo de chocolate",
-  "ingredients": ["chocolate", "farinha", "ovos", "açúcar"],
-  "createdAt": "2024-01-01T10:00:00.000Z",
-  "updatedAt": "2024-01-01T10:00:00.000Z"
+  "name": "Dr. John Smith",
+  "specialty": "Cardiology"
 }
 ```
 
-### Resposta Paginada
+**Search Doctors Example:**
+
+```http
+GET /api/doctors/search?page=1&limit=10&name=John&specialty=Cardiology
+```
+
+### 📅 Doctor Schedules
+
+| Method | Endpoint                       | Description                          |
+| ------ | ------------------------------ | ------------------------------------ |
+| POST   | `/api/doctor-schedules`        | Create schedule slot                 |
+| GET    | `/api/doctor-schedules/search` | Get paginated schedules with filters |
+| GET    | `/api/doctor-schedules/:id`    | Get schedule by ID                   |
+| PUT    | `/api/doctor-schedules/:id`    | Update schedule                      |
+| DELETE | `/api/doctor-schedules/:id`    | Delete schedule                      |
+
+**Create Schedule Example:**
 
 ```json
+POST /api/doctor-schedules
 {
-  "data": [
-    {
-      "id": "123e4567-e89b-12d3-a456-426614174000",
-      "title": "Bolo de Chocolate",
-      "description": "Um delicioso bolo de chocolate",
-      "ingredients": ["chocolate", "farinha", "ovos", "açúcar"],
-      "createdAt": "2024-01-01T10:00:00.000Z",
-      "updatedAt": "2024-01-01T10:00:00.000Z"
-    }
-  ],
-  "meta": {
-    "page": 1,
-    "limit": 10,
-    "total": 25,
-    "totalPages": 3,
-    "hasNext": true,
-    "hasPrev": false
-  }
+  "doctorId": "d47ac10b-58cc-4372-a567-0e02b2c3d479",
+  "availableDate": "2024-02-15",
+  "availableTime": "14:30"
 }
 ```
 
-## Funcionalidades de Paginação e Filtros
+**Search Schedules Example:**
 
-### Paginação Genérica
-
-- Sistema de paginação reutilizável para todas as entidades
-- Metadados completos (página atual, total de páginas, navegação)
-- Validação de parâmetros (página mínima 1, limite máximo 100)
-
-### Filtros Dinâmicos
-
-- **Título**: Busca parcial no título da receita
-- **Descrição**: Busca parcial na descrição
-- **Ingrediente**: Busca parcial em qualquer ingrediente
-- Todos os filtros são case-insensitive
-- Combinação de múltiplos filtros (AND)
-
-### Exemplos de Uso
-
-```bash
-# Página 2 com 5 itens por página
-GET /api/recipes/search?page=2&limit=5
-
-# Filtrar receitas com "chocolate" no título
-GET /api/recipes/search?title=chocolate
-
-# Buscar receitas que contenham "farinha" nos ingredientes
-GET /api/recipes/search?ingredient=farinha
-
-# Combinação de filtros
-GET /api/recipes/search?title=bolo&ingredient=chocolate&page=1&limit=10
+```http
+GET /api/doctor-schedules/search?doctorId=d47ac10b-58cc-4372-a567-0e02b2c3d479&availableDate=2024-02-15
 ```
 
-## Documentação Swagger
+### 🗓️ Appointments
 
-A documentação interativa da API está disponível em:
+| Method | Endpoint                   | Description                             |
+| ------ | -------------------------- | --------------------------------------- |
+| POST   | `/api/appointments`        | Create appointment                      |
+| GET    | `/api/appointments/search` | Get paginated appointments with filters |
+| GET    | `/api/appointments/:id`    | Get appointment by ID                   |
+| PUT    | `/api/appointments/:id`    | Update appointment                      |
+| DELETE | `/api/appointments/:id`    | Delete appointment                      |
+
+**Create Appointment Example:**
+
+```json
+POST /api/appointments
+{
+  "doctorScheduleId": "s47ac10b-58cc-4372-a567-0e02b2c3d479",
+  "patientName": "Jane Doe"
+}
+```
+
+**Search Appointments Example:**
+
+```http
+GET /api/appointments/search?patientName=Jane&page=1&limit=10
+```
+
+## 💼 Business Logic & Workflows
+
+### 📝 Complete Workflow Example
+
+1. **Create Doctor**
+
+   ```bash
+   POST /api/doctors
+   # Creates doctor with empty schedule initially
+   ```
+
+2. **Add Doctor's Available Schedule**
+
+   ```bash
+   POST /api/doctor-schedules
+   # Creates available time slots for the doctor
+   ```
+
+3. **Book Appointment**
+   ```bash
+   POST /api/appointments
+   # Books appointment and marks schedule as occupied
+   ```
+
+### 🔒 Business Rules
+
+- **Referential Integrity**: Schedules must reference existing doctors
+- **Schedule Management**: New schedules are always created as available
+- **Appointment Booking**: Automatically marks schedule as occupied
+- **Appointment Cancellation**: Frees up the schedule slot when deleted
+- **Data Validation**: Comprehensive validation with proper error responses
+
+### 🎯 Domain Independence
+
+Each domain operates independently:
+
+- **Doctors** can exist without schedules
+- **Schedules** require existing doctors
+- **Appointments** require existing schedules
+- Frontend combines data as needed via separate API calls
+
+## 📖 Swagger Documentation
+
+Interactive API documentation is available at:
 **http://localhost:3000/api/docs**
 
-Através do Swagger você pode:
+Features:
 
-- Visualizar todos os endpoints disponíveis
-- Testar as requisições diretamente na interface
-- Ver exemplos de requisição e resposta
-- Consultar a documentação completa dos DTOs
-- Testar paginação e filtros interativamente
+- 📋 Complete endpoint documentation
+- 🧪 Interactive testing interface
+- 📝 Request/response examples
+- 🔍 DTO specifications
+- 🎯 Error response documentation
 
-## Tecnologias Utilizadas
+## 🛠️ Technologies
 
-- NestJS
-- TypeScript
-- Class-validator
-- UUID
-- Swagger/OpenAPI
-- Jest (Testes)
-- Docker
-- Clean Architecture
-- PNPM
+### Core Technologies
 
-## Funcionalidades
+- **NestJS** - Progressive Node.js framework
+- **TypeScript** - Type-safe JavaScript
+- **Class-validator** - Validation decorators
+- **UUID** - Unique identifier generation
+- **Swagger/OpenAPI** - API documentation
 
-- ✅ Criar receita
-- ✅ Listar todas as receitas
-- ✅ Buscar receita por ID
-- ✅ **Busca paginada com filtros**
-- ✅ **Sistema de paginação genérico**
-- ✅ **Filtros por título, descrição e ingredientes**
-- ✅ **Testes unitários completos (100% cobertura use cases)**
-- ✅ **Docker otimizado com multi-stage build**
-- ✅ **Acesso por rede local (multi-dispositivo)**
-- ✅ Validação de dados com class-validator
-- ✅ Documentação automática com Swagger
-- ✅ Arquitetura limpa e escalável
-- ✅ Repositório em memória
-- ✅ Prefixo global `/api` para todas as rotas
+### Architecture & Patterns
+
+- **Clean Architecture** - Layered dependency management
+- **Domain-Driven Design** - Business-focused modeling
+- **SOLID Principles** - Object-oriented design principles
+- **Guard Clauses** - Reduced nesting and complexity
+- **Dependency Injection** - Loose coupling and testability
+
+### Development & DevOps
+
+- **Docker** - Containerization
+- **PNPM** - Package management
+- **ESLint + Prettier** - Code quality and formatting
+
+## 🎨 Code Quality & Best Practices
+
+### ✅ Implemented Patterns
+
+- **Guard Clauses**: Reduced nested if-statements for better readability
+- **English Naming**: Consistent English names throughout codebase
+- **Clean Code**: SOLID principles and separation of concerns
+- **Error Handling**: Proper HTTP exceptions (400, 404, 409)
+- **DTO Interfaces**: Complete interface definitions for frontend integration
+- **Validation**: Comprehensive input validation with class-validator
+- **Type Safety**: Full TypeScript implementation with strict typing
+
+### ✅ Architecture Benefits
+
+- **Scalability**: Easy to add new domains and features
+- **Maintainability**: Clear separation of concerns and dependencies
+- **Testability**: Isolated business logic with dependency injection
+- **Technology Independence**: Business rules independent of frameworks
+- **Production Ready**: Proper error handling and validation
+
+## 🚀 Production Considerations
+
+### Database Migration
+
+- Replace in-memory repositories with database implementations
+- Maintain the same repository interfaces
+- Add database connection and migration scripts
+
+### Environment Configuration
+
+- Environment-specific configurations
+- Secret management for sensitive data
+- Logging and monitoring setup
+
+### Security
+
+- Authentication and authorization
+- Rate limiting and request validation
+- CORS configuration for frontend integration
+
+### Performance
+
+- Caching strategies for frequently accessed data
+- Database indexing for search operations
+- API response optimization
+
+## 📄 License
+
+This project serves as an example implementation of **NestJS with Clean Architecture and DDD principles** for healthcare management systems.
+
+---
+
+**Perfect for learning:**
+
+- 🏗️ Clean Architecture implementation
+- 🎯 Domain-Driven Design patterns
+- 🚀 NestJS best practices
+- 🐳 Docker optimization techniques
+- 📋 API documentation with Swagger
