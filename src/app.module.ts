@@ -9,10 +9,22 @@ import { DeleteDoctorUseCase } from "./application/doctor/use-cases/delete-docto
 import { DoctorRepository } from "./domain/doctor/repositories/doctor.repository";
 import { DoctorMemoryRepository } from "./infrastructure/doctor/repositories/doctor-memory.repository";
 
+// DoctorSchedule imports
+import { DoctorScheduleController } from "./presentation/doctor-schedule/controllers/doctor-schedule.controller";
+import { DoctorSchedulePresenter } from "./presentation/doctor-schedule/presenters/doctor-schedule.presenter";
+import { CreateDoctorScheduleUseCase } from "./application/doctor-schedule/use-cases/create-doctor-schedule.use-case";
+import { GetDoctorScheduleByIdUseCase } from "./application/doctor-schedule/use-cases/get-doctor-schedule-by-id.use-case";
+import { GetDoctorSchedulesPaginatedUseCase } from "./application/doctor-schedule/use-cases/get-doctor-schedules-paginated.use-case";
+import { UpdateDoctorScheduleUseCase } from "./application/doctor-schedule/use-cases/update-doctor-schedule.use-case";
+import { DeleteDoctorScheduleUseCase } from "./application/doctor-schedule/use-cases/delete-doctor-schedule.use-case";
+import { DoctorScheduleRepository } from "./domain/doctor-schedule/repositories/doctor-schedule.repository";
+import { DoctorScheduleMemoryRepository } from "./infrastructure/doctor-schedule/repositories/doctor-schedule-memory.repository";
+
 @Module({
   imports: [],
-  controllers: [DoctorController],
+  controllers: [DoctorController, DoctorScheduleController],
   providers: [
+    // Doctor providers
     DoctorPresenter,
     CreateDoctorUseCase,
     GetDoctorByIdUseCase,
@@ -22,6 +34,18 @@ import { DoctorMemoryRepository } from "./infrastructure/doctor/repositories/doc
     {
       provide: DoctorRepository,
       useClass: DoctorMemoryRepository,
+    },
+
+    // DoctorSchedule providers
+    DoctorSchedulePresenter,
+    CreateDoctorScheduleUseCase,
+    GetDoctorScheduleByIdUseCase,
+    GetDoctorSchedulesPaginatedUseCase,
+    UpdateDoctorScheduleUseCase,
+    DeleteDoctorScheduleUseCase,
+    {
+      provide: DoctorScheduleRepository,
+      useClass: DoctorScheduleMemoryRepository,
     },
   ],
 })
