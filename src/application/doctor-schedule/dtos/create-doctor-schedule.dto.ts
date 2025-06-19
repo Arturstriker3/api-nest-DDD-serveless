@@ -36,14 +36,4 @@ export class CreateDoctorScheduleDto {
     message: "availableTime must be in HH:MM format (00:00 to 23:59)",
   })
   availableTime: string;
-
-  @ApiProperty({
-    description: "ID do agendamento (null = horário disponível)",
-    example: null,
-    required: false,
-    nullable: true,
-  })
-  @IsString()
-  @IsOptional()
-  appointmentId?: string | null;
 }

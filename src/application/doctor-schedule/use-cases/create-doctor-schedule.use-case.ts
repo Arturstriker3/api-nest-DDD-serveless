@@ -49,7 +49,7 @@ export class CreateDoctorScheduleUseCase {
       createDto.doctorId,
       availableDate,
       createDto.availableTime,
-      createDto.appointmentId || null
+      null // Always create as available (no appointment)
     );
 
     return await this.scheduleRepository.save(schedule);

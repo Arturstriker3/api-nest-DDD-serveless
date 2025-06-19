@@ -47,12 +47,15 @@ export class DoctorScheduleController {
   ) {}
 
   @Post()
-  @ApiOperation({ summary: "Criar um novo horário disponível" })
+  @ApiOperation({
+    summary: "Criar um novo horário disponível",
+    description:
+      "Cria um horário sempre disponível (appointmentId será null automaticamente)",
+  })
   @ApiBody({ type: CreateDoctorScheduleDto })
   @ApiResponse({
     status: 201,
-    description:
-      "Horário criado com sucesso (appointmentId sempre null no create)",
+    description: "Horário criado com sucesso (sempre disponível)",
     type: DoctorScheduleDto,
   })
   @ApiResponse({
@@ -62,9 +65,7 @@ export class DoctorScheduleController {
   async create(
     @Body(new ValidationPipe()) createDto: CreateDoctorScheduleDto
   ): Promise<DoctorScheduleDto> {
-    // Force appointmentId to null on create (sempre disponível)
-    const createData = { ...createDto, appointmentId: null };
-    const schedule = await this.createScheduleUseCase.execute(createData);
+    const schedule = await this.createScheduleUseCase.execute(createDto);
     return this.schedulePresenter.toDto(schedule);
   }
 
