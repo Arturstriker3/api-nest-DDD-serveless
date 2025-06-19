@@ -20,9 +20,24 @@ import { DeleteDoctorScheduleUseCase } from "./application/doctor-schedule/use-c
 import { DoctorScheduleRepository } from "./domain/doctor-schedule/repositories/doctor-schedule.repository";
 import { DoctorScheduleMemoryRepository } from "./infrastructure/doctor-schedule/repositories/doctor-schedule-memory.repository";
 
+// Appointment imports
+import { AppointmentController } from "./presentation/appointment/controllers/appointment.controller";
+import { AppointmentPresenter } from "./presentation/appointment/presenters/appointment.presenter";
+import { CreateAppointmentUseCase } from "./application/appointment/use-cases/create-appointment.use-case";
+import { GetAppointmentByIdUseCase } from "./application/appointment/use-cases/get-appointment-by-id.use-case";
+import { GetAppointmentsPaginatedUseCase } from "./application/appointment/use-cases/get-appointments-paginated.use-case";
+import { UpdateAppointmentUseCase } from "./application/appointment/use-cases/update-appointment.use-case";
+import { DeleteAppointmentUseCase } from "./application/appointment/use-cases/delete-appointment.use-case";
+import { AppointmentRepository } from "./domain/appointment/repositories/appointment.repository";
+import { AppointmentMemoryRepository } from "./infrastructure/appointment/repositories/appointment-memory.repository";
+
 @Module({
   imports: [],
-  controllers: [DoctorController, DoctorScheduleController],
+  controllers: [
+    DoctorController,
+    DoctorScheduleController,
+    AppointmentController,
+  ],
   providers: [
     // Doctor providers
     DoctorPresenter,
@@ -46,6 +61,18 @@ import { DoctorScheduleMemoryRepository } from "./infrastructure/doctor-schedule
     {
       provide: DoctorScheduleRepository,
       useClass: DoctorScheduleMemoryRepository,
+    },
+
+    // Appointment providers
+    AppointmentPresenter,
+    CreateAppointmentUseCase,
+    GetAppointmentByIdUseCase,
+    GetAppointmentsPaginatedUseCase,
+    UpdateAppointmentUseCase,
+    DeleteAppointmentUseCase,
+    {
+      provide: AppointmentRepository,
+      useClass: AppointmentMemoryRepository,
     },
   ],
 })

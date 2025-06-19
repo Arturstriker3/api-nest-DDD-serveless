@@ -20,14 +20,13 @@ function getLocalIP(): string {
     }
   }
 
-  // Retorna o primeiro IP encontrado
   for (const name of Object.keys(results)) {
     if (results[name].length > 0) {
       return results[name][0];
     }
   }
 
-  return "IP não encontrado";
+  return "IP not found";
 }
 
 async function bootstrap() {
