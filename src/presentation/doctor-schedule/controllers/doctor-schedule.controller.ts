@@ -90,7 +90,7 @@ export class DoctorScheduleController {
     name: "doctorId",
     required: false,
     description: "Filtrar por ID do médico",
-    example: "1",
+    example: "d47ac10b-58cc-4372-a567-0e02b2c3d479",
   })
   @ApiQuery({
     name: "availableDate",
@@ -137,7 +137,7 @@ export class DoctorScheduleController {
   @ApiParam({
     name: "id",
     description: "ID do horário",
-    example: "sch-1",
+    example: "s47ac10b-58cc-4372-a567-0e02b2c3d479",
   })
   @ApiResponse({
     status: 200,
@@ -162,7 +162,7 @@ export class DoctorScheduleController {
   @ApiParam({
     name: "id",
     description: "ID do horário",
-    example: "sch-1",
+    example: "s47ac10b-58cc-4372-a567-0e02b2c3d479",
   })
   @ApiBody({ type: UpdateDoctorScheduleDto })
   @ApiResponse({
@@ -192,7 +192,7 @@ export class DoctorScheduleController {
   @ApiParam({
     name: "id",
     description: "ID do horário",
-    example: "sch-1",
+    example: "s47ac10b-58cc-4372-a567-0e02b2c3d479",
   })
   @ApiResponse({
     status: 204,

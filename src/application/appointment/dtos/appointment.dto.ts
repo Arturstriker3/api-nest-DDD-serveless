@@ -3,13 +3,13 @@ import { ApiProperty } from "@nestjs/swagger";
 export class AppointmentDto {
   @ApiProperty({
     description: "ID único do agendamento",
-    example: "appointment-1",
+    example: "a47ac10b-58cc-4372-a567-0e02b2c3d479",
   })
   id: string;
 
   @ApiProperty({
     description: "ID do horário do médico",
-    example: "sch-1",
+    example: "f47ac10b-58cc-4372-a567-0e02b2c3d479",
   })
   doctorScheduleId: string;
 

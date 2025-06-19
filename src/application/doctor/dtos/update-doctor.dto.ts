@@ -36,7 +36,10 @@ export class UpdateDoctorDto {
 
   @ApiProperty({
     description: "IDs dos horários disponíveis do médico",
-    example: ["schedule-1", "schedule-2"],
+    example: [
+      "s47ac10b-58cc-4372-a567-0e02b2c3d479",
+      "s47ac10b-58cc-4372-a567-0e02b2c3d480",
+    ],
     required: false,
     type: [String],
   })

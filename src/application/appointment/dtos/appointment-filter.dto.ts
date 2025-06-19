@@ -31,7 +31,7 @@ export class AppointmentFilterDto {
 
   @ApiProperty({
     description: "Filtrar por ID do horário do médico",
-    example: "sch-1",
+    example: "f47ac10b-58cc-4372-a567-0e02b2c3d479",
     required: false,
   })
   @IsString()

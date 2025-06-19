@@ -91,7 +91,7 @@ export class AppointmentController {
     name: "doctorScheduleId",
     required: false,
     description: "Filtrar por ID do horário do médico",
-    example: "sch-1",
+    example: "f47ac10b-58cc-4372-a567-0e02b2c3d479",
   })
   @ApiQuery({
     name: "patientName",
@@ -127,7 +127,7 @@ export class AppointmentController {
   @ApiParam({
     name: "id",
     description: "ID do agendamento",
-    example: "appointment-1",
+    example: "a47ac10b-58cc-4372-a567-0e02b2c3d479",
   })
   @ApiResponse({
     status: 200,
@@ -152,7 +152,7 @@ export class AppointmentController {
   @ApiParam({
     name: "id",
     description: "ID do agendamento",
-    example: "appointment-1",
+    example: "a47ac10b-58cc-4372-a567-0e02b2c3d479",
   })
   @ApiBody({ type: UpdateAppointmentDto })
   @ApiResponse({
@@ -185,7 +185,7 @@ export class AppointmentController {
   @ApiParam({
     name: "id",
     description: "ID do agendamento",
-    example: "appointment-1",
+    example: "a47ac10b-58cc-4372-a567-0e02b2c3d479",
   })
   @ApiResponse({
     status: 204,
